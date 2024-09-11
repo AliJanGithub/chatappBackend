@@ -3,7 +3,6 @@ const userModel = require('../models/usemodel'); // Adjust the path according to
 
 const authMiddleware = async (req, res, next) => {
   try {
-    // Extract token from Authorization header
     const authHeader = req.header("Authorization");
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
@@ -12,17 +11,14 @@ const authMiddleware = async (req, res, next) => {
 
     const token = authHeader.split(" ")[1];
 
-    // Verify token
     const decoded = jwt.verify(token, 'itssecret'); // Use your secret key
     console.log(decoded);
 
-    // Find user by ID from the token
     const user = await userModel.findById(decoded.userid);
     if (!user) {
       return res.status(401).json({ message: 'User not found' });
     }
 
-    // Attach user to request object
     req.user = user;
     next();
   } catch (err) {
