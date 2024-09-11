@@ -1,5 +1,5 @@
 const jwt = require('jsonwebtoken');
-const userModel = require('../models/usemodel'); // Adjust the path according to your project structure
+const userModel = require('../models/usemodel'); 
 
 const authMiddleware = async (req, res, next) => {
   try {
